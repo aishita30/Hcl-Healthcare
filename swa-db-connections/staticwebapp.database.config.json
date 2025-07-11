@@ -1,0 +1,14 @@
+{
+    "routes" : [
+        {
+            "table" : "appointment",
+            "path" : "/data-api/appointments",
+            "methods" : ["GET" , "POST"],
+            "role" : "anonymous"
+        }
+    ],
+    "database" : {
+        "provider" : "mssql",
+        "connectionStringSetting" : "SqlDbConnection"
+    }
+}
