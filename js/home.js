@@ -7,27 +7,18 @@ function logout() {
 }
 
 // Check if user is logged in
-fetch('/.auth/me')
-  .then(res => res.json())
-  .then(data => {
-    const user = data.clientPrincipal;
-
-    if (user) {
-      // OPTIONAL: Display user info
-      const display = document.getElementById("userName");
-      if (display) {
-        display.innerText = `Welcome, ${user.userDetails}`;
-      }
-
-      // 👇 DON'T redirect to index.html if already on it
-      const currentPath = window.location.pathname;
-      if (currentPath === "/login.html") {
-        // Only redirect to index.html if currently on login page
+  fetch("/.auth/me")
+    .then((res) => res.json())
+    .then((data) => {
+      if (data.clientPrincipal) {
+        // Logged in, redirect to home page
         window.location.href = "/index.html";
+      } else {
+        // Not logged in, show login button or message
+        console.log("Not logged in");
       }
-    }
-  })
-  .catch(err => console.error("Auth check failed", err));
+    });
+
 
 
 function sendAppointment() {
