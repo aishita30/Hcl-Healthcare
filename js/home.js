@@ -5,18 +5,33 @@ function loginWithGoogle() {
 function logout() {
   window.location.href = "/.auth/logout";
 }
-  fetch('/.auth/me')
-    .then(res => res.json())
-    .then(data => {
-      if (data.clientPrincipal) {
-        window.location.href = "/index.html"; 
+
+// Check if user is logged in
+fetch('/.auth/me')
+  .then(res => res.json())
+  .then(data => {
+    const user = data.clientPrincipal;
+
+    if (user) {
+      // OPTIONAL: Display user info
+      const display = document.getElementById("userName");
+      if (display) {
+        display.innerText = `Welcome, ${user.userDetails}`;
       }
-    });
+
+      // 👇 DON'T redirect to index.html if already on it
+      const currentPath = window.location.pathname;
+      if (currentPath === "/login.html") {
+        // Only redirect to index.html if currently on login page
+        window.location.href = "/index.html";
+      }
+    }
+  })
+  .catch(err => console.error("Auth check failed", err));
 
 
-
-  function sendAppointment() {
-    const data = {
+function sendAppointment() {
+  const data = {
       FullName: document.getElementsByName("fullName")[0].value,
       Email: document.getElementsByName("Email")[0].value,
       PhoneNumber: document.getElementsByName("phoneNumber")[0].value,
@@ -24,17 +39,17 @@ function logout() {
       AppointmentTime: document.getElementsByName("AT")[0].value,
       DoctorName: document.getElementsByName("doctor")[0].value,
       ComplimentaryMessage: document.getElementsByName("message")[0].value
-    };
+  };
 
-    fetch("/data-api/appointments", {
+  fetch("/data-api/appointments", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data)
-    })
+  })
     .then(() => {
       alert("✅ Appointment submitted successfully!");
-    });
-  }
+  });
+}
 
 
 
