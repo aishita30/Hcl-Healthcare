@@ -7,17 +7,27 @@ function logout() {
 }
 
 // Check if user is logged in
-  fetch("/.auth/me")
-    .then((res) => res.json())
-    .then((data) => {
-      if (data.clientPrincipal) {
-        // Logged in, redirect to home page
-        window.location.href = "/index.html";
-      } else {
-        // Not logged in, show login button or message
-        console.log("Not logged in");
+fetch('/.auth/me')
+  .then(res => res.json())
+  .then(data => {
+    const user = data.clientPrincipal;
+
+    if (user) {
+      // OPTIONAL: Display user info
+      const display = document.getElementById("userName");
+      if (display) {
+        display.innerText = `Welcome, ${user.userDetails}`;
       }
-    });
+
+      // ✅ No redirection needed if your site starts on index.html
+      // You can show additional UI if needed
+    } else {
+      // OPTIONAL: If user is not logged in, you can show a login prompt
+      console.log("User not logged in");
+    }
+  })
+  .catch(err => console.error("Auth check failed", err));
+
 
 
 
