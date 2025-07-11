@@ -1,32 +1,38 @@
-function loginWithGoogle() {
-  window.location.href = "/.auth/login/google";
-}
 
-function logout() {
-  window.location.href = "/.auth/logout";
-}
+  function loginWithGoogle() {
+    window.location.href = "/.auth/login/google";
+  }
 
-// Check if user is logged in
-fetch('/.auth/me')
-  .then(res => res.json())
-  .then(data => {
-    const user = data.clientPrincipal;
+  function logout() {
+    window.location.href = "/.auth/logout";
+  }
 
-    if (user) {
-      // OPTIONAL: Display user info
-      const display = document.getElementById("userName");
-      if (display) {
-        display.innerText = `Welcome, ${user.userDetails}`;
+  // Immediately check login status
+  fetch('/.auth/me')
+    .then(res => res.json())
+    .then(data => {
+      const user = data.clientPrincipal;
+
+      if (user) {
+        // ✅ User is logged in — show page
+        document.getElementById("protectedContent").style.display = "block";
+
+        // Optional: Show user name
+        const display = document.getElementById("userName");
+        if (display) {
+          display.innerText = `Welcome, ${user.userDetails}`;
+        }
+
+      } else {
+        // ❌ Not logged in — redirect to Google auth
+        window.location.href = "/.auth/login/google";
       }
+    })
+    .catch(err => {
+      console.error("Auth check failed", err);
+      window.location.href = "/.auth/login/google";
+    });
 
-      // ✅ No redirection needed if your site starts on index.html
-      // You can show additional UI if needed
-    } else {
-      // OPTIONAL: If user is not logged in, you can show a login prompt
-      console.log("User not logged in");
-    }
-  })
-  .catch(err => console.error("Auth check failed", err));
 
 
 
