@@ -48,7 +48,7 @@ function sendAppointment() {
       ComplimentaryMessage: document.getElementsByName("message")[0].value
   };
 
-  fetch("/data-api/appointments", {
+  fetch("/data-api/appointment", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data)
