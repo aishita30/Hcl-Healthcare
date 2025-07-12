@@ -62,14 +62,15 @@ fetch("/data-api/appointment", {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data)
 })
-.then(response => {
-    if (!response.ok) {
-        return response.text().then(text => {
-            throw new Error(`Server error: ${response.status} - ${text}`);
-        });
-    }
-    alert("Appointment submitted successfully!");
+.then(async (response) => {
+  if (!response.ok) {
+    const text = await response.text();
+    throw new Error(`❌ Server error: ${response.status} - ${text}`);
+  }
+
+  alert("✅ Appointment submitted successfully!");
 })
+
 .catch(error => {
     console.error("Submission failed:", error);
     alert("Appointment submission failed. Check console for details.");
