@@ -11,16 +11,12 @@ fetch("/.auth/me")
   .then(res => res.json())
   .then(data => {
     const user = data.clientPrincipal;
-
     const path = window.location.pathname;
 
     if (user) {
-      // ✅ User is logged in
       if (path.includes("login.html")) {
-        // 👉 Redirect to index.html if we're still on login page
         window.location.href = "/index.html";
       } else if (path.includes("index.html") || path === "/") {
-        // ✅ On index.html → show content
         const protectedContent = document.getElementById("protectedContent");
         if (protectedContent) protectedContent.style.display = "block";
 
@@ -30,7 +26,6 @@ fetch("/.auth/me")
         }
       }
     } else {
-      // ❌ Not logged in
       if (!path.includes("login.html")) {
         window.location.href = "/login.html";
       }
@@ -43,39 +38,34 @@ fetch("/.auth/me")
     }
   });
 
-
-
-
 function sendAppointment() {
   const data = {
-      FullName: document.getElementsByName("fullName")[0].value,
-      Email: document.getElementsByName("Email")[0].value,
-      PhoneNumber: document.getElementsByName("phoneNumber")[0].value,
-      AppointmentDate: document.getElementsByName("AD")[0].value,
-      AppointmentTime: document.getElementsByName("AT")[0].value,
-      DoctorName: document.getElementsByName("doctor")[0].value,
-      ComplimentaryMessage: document.getElementsByName("message")[0].value
+    FullName: document.getElementsByName("fullName")[0].value,
+    Email: document.getElementsByName("Email")[0].value,
+    PhoneNumber: document.getElementsByName("phoneNumber")[0].value,
+    AppointmentDate: document.getElementsByName("AD")[0].value,
+    AppointmentTime: document.getElementsByName("AT")[0].value,
+    DoctorName: document.getElementsByName("doctor")[0].value,
+    ComplimentaryMessage: document.getElementsByName("message")[0].value
   };
 
-
-fetch("/data-api/appointment", {
+  fetch("/data-api/appointment", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data)
-})
-.then(async (response) => {
-  if (!response.ok) {
-    const text = await response.text();
-    throw new Error(`❌ Server error: ${response.status} - ${text}`);
-  }
-
-  alert("✅ Appointment submitted successfully!");
-})
-
-.catch(error => {
+  })
+  .then(async (response) => {
+    if (!response.ok) {
+      const text = await response.text();
+      throw new Error(`❌ Server error: ${response.status} - ${text}`);
+    }
+    alert("✅ Appointment submitted successfully!");
+  })
+  .catch(error => {
     console.error("Submission failed:", error);
     alert("Appointment submission failed. Check console for details.");
-});
+  });
+}
 
 
 
