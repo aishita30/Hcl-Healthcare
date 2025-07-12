@@ -1,38 +1,47 @@
+function loginWithGoogle() {
+  window.location.href = "/.auth/login/google";
+}
 
-  function loginWithGoogle() {
-    window.location.href = "/.auth/login/google";
-  }
+function logout() {
+  window.location.href = "/.auth/logout";
+}
 
-  function logout() {
-    window.location.href = "/.auth/logout";
-  }
+// 🔐 Authentication Logic
+fetch("/.auth/me")
+  .then(res => res.json())
+  .then(data => {
+    const user = data.clientPrincipal;
 
-  // Immediately check login status
-  fetch('/.auth/me')
-    .then(res => res.json())
-    .then(data => {
-      const user = data.clientPrincipal;
+    const path = window.location.pathname;
 
-      if (user) {
-        // ✅ User is logged in — show page
-        document.getElementById("protectedContent").style.display = "block";
+    if (user) {
+      // ✅ User is logged in
+      if (path.includes("login.html")) {
+        // 👉 Redirect to index.html if we're still on login page
+        window.location.href = "/index.html";
+      } else if (path.includes("index.html") || path === "/") {
+        // ✅ On index.html → show content
+        const protectedContent = document.getElementById("protectedContent");
+        if (protectedContent) protectedContent.style.display = "block";
 
-        // Optional: Show user name
-        const display = document.getElementById("userName");
-        if (display) {
-          display.innerText = `Welcome, ${user.userDetails}`;
+        const userDisplay = document.getElementById("userName");
+        if (userDisplay) {
+          userDisplay.innerText = `Welcome, ${user.userDetails}`;
         }
-
-      } else {
-        // ❌ Not logged in — redirect to Google auth
-        window.location.href = "/.auth/login/google";
       }
-    })
-    .catch(err => {
-      console.error("Auth check failed", err);
-      window.location.href = "/.auth/login/google";
-    });
-
+    } else {
+      // ❌ Not logged in
+      if (!path.includes("login.html")) {
+        window.location.href = "/login.html";
+      }
+    }
+  })
+  .catch((err) => {
+    console.error("Auth check failed", err);
+    if (!window.location.pathname.includes("login.html")) {
+      window.location.href = "/login.html";
+    }
+  });
 
 
 

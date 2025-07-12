@@ -2,7 +2,7 @@
     "routes" : [
         {
             "table" : "appointment",
-            "path" : "/data-api/appointments",
+            "path" : "/data-api/appointment",
             "methods" : ["GET" , "POST"],
             "role" : "anonymous"
         }

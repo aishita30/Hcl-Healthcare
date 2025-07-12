@@ -1,0 +1,6 @@
+{
+  "navigationFallback": {
+    "rewrite": "/login.html",
+    "exclude": ["/.auth/*", "/api/*", "/css/*", "/js/*", "/images/*", "/data-api/*"]
+  }
+}
