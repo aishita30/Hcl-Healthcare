@@ -57,15 +57,23 @@ function sendAppointment() {
       ComplimentaryMessage: document.getElementsByName("message")[0].value
   };
 
-  fetch("/data-api/appointment", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
-  })
-    .then(() => {
-      alert("✅ Appointment submitted successfully!");
-  });
-}
+fetch("/data-api/appointment", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data)
+})
+.then(response => {
+    if (!response.ok) {
+        return response.text().then(text => {
+            throw new Error(`Server error: ${response.status} - ${text}`);
+        });
+    }
+    alert("Appointment submitted successfully!");
+})
+.catch(error => {
+    console.error("Submission failed:", error);
+    alert("Appointment submission failed. Check console for details.");
+});
 
 
 

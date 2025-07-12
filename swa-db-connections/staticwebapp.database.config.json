@@ -2,12 +2,6 @@
   "routes": [
     {
       "table": "dbo.appointment",
-      "path": "/data-api/appointment",
-      "methods": ["GET", "POST"],
-      "role": "authenticated"
-    },
-    {
-      "table": "dbo.appointment",
       "path": "/data-api/appointment/public",
       "methods": ["GET","POST"],
       "role": "anonymous"
