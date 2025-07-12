@@ -1,18 +1,19 @@
 {
   "routes": [
     {
-      "table": "appointment",
-      "path": "/data-api/appointment",
+      "table": "dbo.appointment",
+      "path": "/data-api/dbo.appointment",
       "methods": ["GET", "POST"],
       "role": "authenticated"
     },
     {
-      "table": "appointment",
-      "path": "/data-api/appointment/public",
-      "methods": ["POST"],
+      "table": "dbo.appointment",
+      "path": "/data-api/dbo.appointment/public",
+      "methods": ["GET","POST"],
       "role": "anonymous"
     }
   ],
+
   "database": {
     "provider": "mssql",
     "connectionStringSetting": "SqlDbConnection"
