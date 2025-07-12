@@ -44,6 +44,7 @@ jobs:
           output_location: "/" # Built app content directory - optional
           skip_app_build : true
           github_id_token: ${{ steps.idtoken.outputs.result }}
+          data_api_location : "swa-db-connections"
           ###### End of Repository/Build Configurations ######
 
   close_pull_request_job:
