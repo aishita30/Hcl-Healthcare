@@ -4,7 +4,7 @@
             "table" : "appointment",
             "path" : "/data-api/appointment",
             "methods" : ["GET" , "POST"],
-            "role" : "anonymous"
+            "role" : "authenticated"
         }
     ],
     "database" : {
