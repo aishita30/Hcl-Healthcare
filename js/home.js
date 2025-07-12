@@ -57,6 +57,16 @@ function sendAppointment() {
       ComplimentaryMessage: document.getElementsByName("message")[0].value
   };
 
+if (
+  !data.FullName || !data.Email || !data.PhoneNumber ||
+  !data.AppointmentDate || !data.AppointmentTime || !data.DoctorName
+) {
+  alert("Please fill all required fields.");
+  return;
+}
+console.log("🚀 Payload:", JSON.stringify(data));
+
+
 fetch("/data-api/appointment", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
