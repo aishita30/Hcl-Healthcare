@@ -1,7 +1,7 @@
 {
   "routes": [
     {
-      "table": "dbo.appointment",
+      "table": "appointment",
       "path": "/data-api/appointment/public",
       "methods": ["GET","POST"],
       "role": "anonymous"
