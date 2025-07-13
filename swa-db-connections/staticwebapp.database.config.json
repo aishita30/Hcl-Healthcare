@@ -4,9 +4,7 @@
       "table": "dbo.appointment",
       "path": "/data-api/appointment/public",
       "methods": ["GET","POST"],
-      "permissions": {
-         "anonymous": ["read", "create"]
-        }
+      "role": "anonymous"
     }
   ],
 
